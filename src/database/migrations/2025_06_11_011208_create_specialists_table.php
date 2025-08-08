@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('specialists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('workplace_id');
             $table->string('phone', 12)->nullable();
             $table->string('education')->nullable();
             $table->timestamps();

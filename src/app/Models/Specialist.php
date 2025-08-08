@@ -12,4 +12,9 @@ class Specialist extends Model
         'phone',
         'education'
     ];
+
+    public function workplace()
+    {
+        return $this->belongsTo(MedicalInstitution::class, 'workplace_id', 'id');
+    }
 }

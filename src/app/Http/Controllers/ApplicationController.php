@@ -55,8 +55,6 @@ class ApplicationController
 
     public function update(ApplicationUpdateRequest $request): RedirectResponse
     {
-
-
         return redirect()->route('applications.index');
     }
 

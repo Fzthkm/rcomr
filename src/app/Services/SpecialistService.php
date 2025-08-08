@@ -10,4 +10,9 @@ class SpecialistService extends BaseService
     {
         parent::__construct($repository);
     }
+
+    public function getWorkplaceId(int $specialistId): Int
+    {
+        return $this->repository->getWorkplaceId($specialistId);
+    }
 }

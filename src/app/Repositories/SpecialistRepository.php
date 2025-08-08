@@ -11,4 +11,9 @@ class SpecialistRepository extends BaseRepository
     {
         parent::__construct($model);
     }
+
+    public function getWorkplaceId(int $specialistId): Int
+    {
+        return $this->find($specialistId)->get('workplace_id');
+    }
 }

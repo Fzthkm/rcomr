@@ -14,7 +14,7 @@ class ApplicationDTO implements BaseDtoInterface
         public string $patientName,
         public string $patientYear,
         public int $diagnosisId,
-        public ?int $institutionFromId = null,
+        public ?int $fromInstitutionId = null,
         public ?int $applicationNumber = null,
         public ?string $createdAt = null,
     ) {
@@ -55,6 +55,7 @@ class ApplicationDTO implements BaseDtoInterface
         return [
             'application_number' => $this->applicationNumber,
             'consultation_date' => $this->consultationDate,
+            'from_institution_id' => $this->fromInstitutionId,
             'institution_id' => $this->institutionId,
             'specialist_id' => $this->specialistId,
             'patient_name' => $this->patientName,

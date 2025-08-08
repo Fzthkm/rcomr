@@ -9,8 +9,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApplicationService extends BaseService
 {
-    public function __construct(ApplicationRepository $repository)
-    {
+    public function __construct(
+        ApplicationRepository $repository,
+        private SpecialistService $specialistService,
+    ) {
         parent::__construct($repository);
     }
 
@@ -32,6 +34,7 @@ class ApplicationService extends BaseService
 
     public function create(BaseDtoInterface $dto): mixed
     {
+        $dto->fromInstitutionId = $this->specialistService->create($dto);
         return $this->repository->store($dto->withApplicationNumber($this->generateApplicationNumber()));
     }
 
