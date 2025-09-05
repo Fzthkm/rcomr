@@ -6,6 +6,7 @@ use App\Enums\ApplicationStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Модель заявки
@@ -22,6 +23,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Application extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'applications';
 
     protected $guarded = [

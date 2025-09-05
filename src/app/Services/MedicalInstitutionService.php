@@ -8,6 +8,6 @@ class MedicalInstitutionService extends BaseService
 {
     public function __construct(MedicalInstitutionRepository $repository)
     {
-        parent::__construct($repository);
+        parent::__construct($repository, 'institutions');
     }
 }

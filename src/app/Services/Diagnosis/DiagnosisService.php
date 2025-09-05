@@ -11,7 +11,7 @@ class DiagnosisService extends BaseService
 {
     public function __construct(DiagnosisRepository $repository)
     {
-        parent::__construct($repository);
+        parent::__construct($repository, 'diagnoses');
     }
 
     public function all(): Collection

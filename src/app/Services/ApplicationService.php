@@ -13,32 +13,25 @@ class ApplicationService extends BaseService
         ApplicationRepository $repository,
         private SpecialistService $specialistService,
     ) {
-        parent::__construct($repository);
+        parent::__construct($repository, 'applications');
     }
 
     public function allWithPagination(array $filters = [], int $perPage = 100): LengthAwarePaginator
     {
         $query = $this->repository->queryWithRelations();
 
-//        if (!empty($filters['status'])) {
-//            $query->where('status', $filters['status']);
-//        }
-//
-//        if (!empty($filters['application_number'])) {
-//            $query->where('application_number', $filters['application_number']);
-//        }
-//
-
         return $query->paginate($perPage);
     }
 
     public function create(BaseDtoInterface $dto): mixed
     {
-        $dto->fromInstitutionId = $this->specialistService->create($dto);
+        if ($dto->specialistId) {
+            $dto->fromInstitutionId = $this->specialistService->getWorkplaceId($dto->specialistId);
+        }
         return $this->repository->store($dto->withApplicationNumber($this->generateApplicationNumber()));
     }
 
-    public function generateApplicationNumber(): int
+    public function generateApplicationNumber(): Int
     {
         $latestApplication = $this->repository->latestApplication(now()->year);
 

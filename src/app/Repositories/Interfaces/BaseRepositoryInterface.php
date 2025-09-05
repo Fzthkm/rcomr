@@ -15,5 +15,5 @@ interface BaseRepositoryInterface
 
     public function update(Model $model, BaseDtoInterface $dto): Model;
 
-    public function delete(Model $model): void;
+    public function delete(int|Model $target): bool;
 }

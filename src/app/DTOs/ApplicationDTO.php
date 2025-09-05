@@ -10,9 +10,9 @@ class ApplicationDTO implements BaseDtoInterface
     public function __construct(
         public string $consultationDate,
         public int $institutionId,
-        public int $specialistId,
-        public string $patientName,
-        public string $patientYear,
+        public ?int $specialistId,
+        public ?string $patientName,
+        public ?string $patientBirthYear,
         public int $diagnosisId,
         public ?int $fromInstitutionId = null,
         public ?int $applicationNumber = null,
@@ -27,7 +27,7 @@ class ApplicationDTO implements BaseDtoInterface
             institutionId: $request->input('institution_id'),
             specialistId: $request->input('specialist_id'),
             patientName: $request->input('patient_name'),
-            patientYear: $request->input('patient_year'),
+            patientBirthYear: $request->input('patient_birth_year'),
             diagnosisId: $request->input('diagnosis_id'),
         );
     }
@@ -59,7 +59,7 @@ class ApplicationDTO implements BaseDtoInterface
             'institution_id' => $this->institutionId,
             'specialist_id' => $this->specialistId,
             'patient_name' => $this->patientName,
-            'patient_year' => $this->patientYear,
+            'patient_birth_year' => $this->patientBirthYear,
             'diagnosis_id' => $this->diagnosisId,
             'created_at' => $this->createdAt,
         ];

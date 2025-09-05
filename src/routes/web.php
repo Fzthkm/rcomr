@@ -1,14 +1,68 @@
 <?php
 
-use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    ApplicationController,
+    SpecialistController,
+    SpecializationController
+};
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+|--------------------------------------------------------------------------
+| Глобальные ограничения параметров
+|--------------------------------------------------------------------------
+| ВАЖНО: паттерны должны идти ДО определения маршрутов.
+*/
+Route::pattern('specialist', '[0-9]+');
+Route::pattern('specialization', '[0-9]+');
+Route::pattern('application', '[0-9]+');
 
-Route::controller(ApplicationController::class)->group(function () {
-    Route::get('/applications', 'index')->name('applications.index');
-    Route::get('/applications/create', 'create')->name('applications.create');
-    Route::post('/applications', 'store')->name('applications.store');
+/*
+|--------------------------------------------------------------------------
+| Главная
+|--------------------------------------------------------------------------
+*/
+Route::view('/', 'welcome')->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Applications
+|--------------------------------------------------------------------------
+*/
+Route::resource('applications', ApplicationController::class);
+
+Route::patch('applications/reassign', [ApplicationController::class, 'reassign'])
+    ->name('applications.reassign');
+
+/*
+|--------------------------------------------------------------------------
+| Specialists
+|--------------------------------------------------------------------------
+*/
+Route::resource('specialists', SpecialistController::class);
+
+// Проверка возможности удаления (409 + список заявок, если нельзя)
+Route::get('specialists/{specialist}/deletion-check', [SpecialistController::class, 'deletionCheck'])
+    ->name('specialists.deletion-check');
+Route::get('specialists/{specialist}/applications', [ApplicationController::class, 'bySpecialist'])
+    ->name('applications.by-specialist');
+
+/*
+|--------------------------------------------------------------------------
+| Specializations
+|--------------------------------------------------------------------------
+*/
+Route::resource('specializations', SpecializationController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Fallback
+|--------------------------------------------------------------------------
+| Если очень хочется, делаем умный fallback: JSON для AJAX, редирект для обычной навигации.
+*/
+Route::fallback(function () {
+    if (request()->expectsJson()) {
+        return response()->json(['message' => 'Not Found'], 404);
+    }
+    return redirect()->route('home');
 });

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('medical_institutions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('region_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

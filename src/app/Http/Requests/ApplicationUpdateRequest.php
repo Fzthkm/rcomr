@@ -22,12 +22,15 @@ class ApplicationUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'consultation_date' => 'date',
-            'institution_id' => ['required', 'exists:medical_institutions,id'],
-            'specialist_id' => ['required', 'exists:specialists,id'],
-            'diagnosis_id' => ['required', 'exists:diagnoses,id'],
-            'created_at' => 'date',
-            'status' => 'string'
+            'application_number'  => ['required', 'integer'],
+            'patient_name'        => ['sometimes','string','max:255'],
+            'patient_birth_year'  => ['sometimes','integer','digits:4','min:1900','max:' . now()->year],
+            'institution_id'      => ['sometimes','exists:medical_institutions,id'],
+            'from_institution_id' => ['sometimes','nullable','exists:medical_institutions,id'],
+            'specialist_id'       => ['sometimes','nullable','exists:specialists,id'],
+            'diagnosis_id'        => ['sometimes','exists:diagnoses,id'],
+            'consultation_date'   => ['sometimes','date_format:d.m.Y'],
+            'created_at'          => ['sometimes','date_format:d.m.Y'],
         ];
     }
 }

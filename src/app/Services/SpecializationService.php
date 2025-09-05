@@ -8,6 +8,6 @@ class SpecializationService extends BaseService
 {
     public function __construct(SpecializationRepository $repository)
     {
-        parent::__construct($repository);
+        parent::__construct($repository, 'specializations');
     }
 }

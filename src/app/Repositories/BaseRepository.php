@@ -15,7 +15,9 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function all(array $columns = ['*']): Collection
     {
-        return $this->model->all($columns);
+        return $this->model
+            ->orderBy('name', 'asc')
+            ->get($columns);
     }
 
     public function find(int $id, array $columns = ['*']): ?Model
@@ -34,8 +36,12 @@ class BaseRepository implements BaseRepositoryInterface
         return $model;
     }
 
-    public function delete(Model $model): void
+    public function delete(int|Model $target): bool
     {
-        $model->delete();
+        if ($target instanceof Model) {
+            return (bool) $target->delete();
+        }
+
+        return (bool) $this->model->whereKey($target)->delete();
     }
 }

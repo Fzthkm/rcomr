@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\ApplicationStatus;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ApplicationCreateRequest extends FormRequest
 {
@@ -26,7 +24,7 @@ class ApplicationCreateRequest extends FormRequest
         return [
             'consultation_date' => 'date',
             'institution_id' => ['required', 'exists:medical_institutions,id'],
-            'specialist_id' => ['required', 'exists:specialists,id'],
+            'specialist_id' => ['nullable', 'exists:specialists,id'],
             'diagnosis_id' => ['required', 'exists:diagnoses,id'],
         ];
     }

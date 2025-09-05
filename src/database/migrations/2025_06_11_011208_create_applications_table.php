@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('consultation_date');
             $table->unsignedBigInteger('institution_id');
             $table->unsignedBigInteger('from_institution_id')->nullable();
-            $table->unsignedBigInteger('specialist_id');
+            $table->unsignedBigInteger('specialist_id')->nullable();
             $table->string('patient_name');
             $table->string('patient_birth_year', 4)->nullable();
             $table->unsignedBigInteger('diagnosis_id');
